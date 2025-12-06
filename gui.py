@@ -3,6 +3,7 @@ GUI Implementation for Baduk (Go) Game using Tkinter
 """
 
 import tkinter as tk
+import threading
 from tkinter import messagebox, simpledialog
 from game import BadukGame
 from network import GameServer, GameClient
@@ -335,7 +336,6 @@ class BadukGUI:
                 self.network_client = None
         
         # Connect in a separate thread
-        import threading
         threading.Thread(target=try_connect, daemon=True).start()
     
     def start_network_game(self, role, board_size, host_dialog=None):

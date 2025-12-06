@@ -5,7 +5,6 @@ Network multiplayer functionality for Baduk (Go) game
 import socket
 import json
 import threading
-import time
 
 
 class GameServer:
@@ -131,13 +130,13 @@ class GameServer:
         if self.client_socket:
             try:
                 self.client_socket.close()
-            except:
+            except Exception:
                 pass
         
         if self.server_socket:
             try:
                 self.server_socket.close()
-            except:
+            except Exception:
                 pass
     
     def get_local_ip(self):
@@ -149,7 +148,7 @@ class GameServer:
             local_ip = s.getsockname()[0]
             s.close()
             return local_ip
-        except:
+        except Exception:
             return "127.0.0.1"
 
 
@@ -250,5 +249,5 @@ class GameClient:
         if self.socket:
             try:
                 self.socket.close()
-            except:
+            except Exception:
                 pass
