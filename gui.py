@@ -3,10 +3,8 @@ GUI Implementation for Baduk (Go) Game using Tkinter
 """
 
 import tkinter as tk
-from tkinter import messagebox, simpledialog
+from tkinter import messagebox
 from game import BadukGame
-import threading
-import time
 
 
 class BadukGUI:
