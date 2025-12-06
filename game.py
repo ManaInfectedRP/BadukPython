@@ -8,14 +8,16 @@ from ai_player import AIPlayer
 class BadukGame:
     """Main game controller for Baduk."""
     
-    def __init__(self, mode='multiplayer', board_size=19, ai_difficulty='medium'):
+    def __init__(self, mode='multiplayer', board_size=19, ai_difficulty='medium', network_role=None, network_connection=None):
         """
         Initialize a Baduk game.
         
         Args:
-            mode: 'singleplayer' or 'multiplayer'
+            mode: 'singleplayer', 'multiplayer', or 'network'
             board_size: Size of the board (9, 13, or 19)
             ai_difficulty: 'easy', 'medium', or 'hard' (for singleplayer)
+            network_role: 'host' or 'client' (for network mode)
+            network_connection: GameServer or GameClient instance (for network mode)
         """
         self.mode = mode
         self.board = Board(board_size)
@@ -27,6 +29,10 @@ class BadukGame:
         self.ai = None
         if mode == 'singleplayer':
             self.ai = AIPlayer('white', ai_difficulty)
+        
+        # Network multiplayer support
+        self.network_role = network_role
+        self.network_connection = network_connection
     
     def switch_player(self):
         """Switch to the other player."""
