@@ -188,6 +188,10 @@ class Board:
         """
         Calculate the score using area scoring.
         
+        Note: This implementation uses visited set to track processed regions,
+        making it O(n^2) where n is board size, which is efficient for standard
+        board sizes (9x9, 13x13, 19x19).
+        
         Returns:
             Dictionary with 'black' and 'white' scores
         """

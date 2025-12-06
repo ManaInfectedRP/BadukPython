@@ -52,22 +52,23 @@ class AIPlayer:
         for row, col in legal_moves:
             opponent_color = 'white' if self.color == 'black' else 'black'
             
-            # Check if this move captures any stones
+            # Check if this move captures any stones - use try-finally for safety
             board.grid[row][col] = self.color
-            captures = 0
             
-            for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
-                adj_row, adj_col = row + dr, col + dc
-                if board.is_valid_position(adj_row, adj_col):
-                    if board.grid[adj_row][adj_col] == opponent_color:
-                        group = board._get_group(adj_row, adj_col)
-                        if board._count_liberties(group) == 0:
-                            captures += len(group)
-            
-            board.grid[row][col] = None
-            
-            if captures > 0:
-                capture_moves.append((row, col, captures))
+            try:
+                captures = 0
+                for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                    adj_row, adj_col = row + dr, col + dc
+                    if board.is_valid_position(adj_row, adj_col):
+                        if board.grid[adj_row][adj_col] == opponent_color:
+                            group = board._get_group(adj_row, adj_col)
+                            if board._count_liberties(group) == 0:
+                                captures += len(group)
+                
+                if captures > 0:
+                    capture_moves.append((row, col, captures))
+            finally:
+                board.grid[row][col] = None
         
         if capture_moves:
             # Choose the move that captures the most stones
@@ -79,11 +80,12 @@ class AIPlayer:
         
         for row, col in legal_moves:
             board.grid[row][col] = self.color
-            group = board._get_group(row, col)
-            liberties = board._count_liberties(group)
-            board.grid[row][col] = None
-            
-            liberty_moves.append((row, col, liberties))
+            try:
+                group = board._get_group(row, col)
+                liberties = board._count_liberties(group)
+                liberty_moves.append((row, col, liberties))
+            finally:
+                board.grid[row][col] = None
         
         if liberty_moves:
             liberty_moves.sort(key=lambda x: x[2], reverse=True)
@@ -126,53 +128,54 @@ class AIPlayer:
         score = 0
         opponent_color = 'white' if self.color == 'black' else 'black'
         
-        # Temporarily place stone
+        # Temporarily place stone - use try-finally to ensure state restoration
         board.grid[row][col] = self.color
         
-        # Check captures
-        captures = 0
-        for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
-            adj_row, adj_col = row + dr, col + dc
-            if board.is_valid_position(adj_row, adj_col):
-                if board.grid[adj_row][adj_col] == opponent_color:
-                    group = board._get_group(adj_row, adj_col)
-                    if board._count_liberties(group) == 0:
-                        captures += len(group)
-        
-        score += captures * 10  # Capturing is valuable
-        
-        # Check our liberties
-        my_group = board._get_group(row, col)
-        my_liberties = board._count_liberties(my_group)
-        score += my_liberties * 2
-        
-        # Check if we're threatening opponent groups
-        threats = 0
-        for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
-            adj_row, adj_col = row + dr, col + dc
-            if board.is_valid_position(adj_row, adj_col):
-                if board.grid[adj_row][adj_col] == opponent_color:
-                    group = board._get_group(adj_row, adj_col)
-                    liberties = board._count_liberties(group)
-                    if liberties <= 2:
-                        threats += (3 - liberties) * 3
-        
-        score += threats
-        
-        # Prefer center and strategic points
-        center = board.size // 2
-        distance_from_center = abs(row - center) + abs(col - center)
-        score += (board.size - distance_from_center) * 0.5
-        
-        # Prefer corner and edge points in opening
-        move_count = len(board.move_history)
-        if move_count < 20:
-            # Corners and edges are valuable early
-            if (row < 4 or row >= board.size - 4) and (col < 4 or col >= board.size - 4):
-                score += 5
-        
-        # Restore board
-        board.grid[row][col] = None
+        try:
+            # Check captures
+            captures = 0
+            for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                adj_row, adj_col = row + dr, col + dc
+                if board.is_valid_position(adj_row, adj_col):
+                    if board.grid[adj_row][adj_col] == opponent_color:
+                        group = board._get_group(adj_row, adj_col)
+                        if board._count_liberties(group) == 0:
+                            captures += len(group)
+            
+            score += captures * 10  # Capturing is valuable
+            
+            # Check our liberties
+            my_group = board._get_group(row, col)
+            my_liberties = board._count_liberties(my_group)
+            score += my_liberties * 2
+            
+            # Check if we're threatening opponent groups
+            threats = 0
+            for dr, dc in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                adj_row, adj_col = row + dr, col + dc
+                if board.is_valid_position(adj_row, adj_col):
+                    if board.grid[adj_row][adj_col] == opponent_color:
+                        group = board._get_group(adj_row, adj_col)
+                        liberties = board._count_liberties(group)
+                        if liberties <= 2:
+                            threats += (3 - liberties) * 3
+            
+            score += threats
+            
+            # Prefer center and strategic points
+            center = board.size // 2
+            distance_from_center = abs(row - center) + abs(col - center)
+            score += (board.size - distance_from_center) * 0.5
+            
+            # Prefer corner and edge points in opening
+            move_count = len(board.move_history)
+            if move_count < 20:
+                # Corners and edges are valuable early
+                if (row < 4 or row >= board.size - 4) and (col < 4 or col >= board.size - 4):
+                    score += 5
+        finally:
+            # Always restore board state
+            board.grid[row][col] = None
         
         return score
     

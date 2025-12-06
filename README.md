@@ -17,19 +17,32 @@ A complete implementation of the Baduk (Go) board game with both singleplayer (v
 - **Strategic AI**: The AI uses multiple heuristics including capture detection, liberty counting, and positional evaluation
 
 ## Installation
-This game uses only Python's standard library, so no external dependencies are required.
+
+### Prerequisites
+- Python 3.11.* is required
+- This game uses only Python's standard library, so no external dependencies are needed
 
 ```bash
+# Verify Python version
+python3 --version  # Should show Python 3.11.x
+
 # Clone the repository
 git clone https://github.com/ManaInfectedRP/BadukPython.git
 cd BadukPython
 ```
 
+If you don't have Python 3.11, you can install it using:
+- **Ubuntu/Debian**: `sudo apt-get install python3.11`
+- **macOS** (with Homebrew): `brew install python@3.11`
+- **Windows**: Download from [python.org](https://www.python.org/downloads/)
+
 ## Usage
 Run the game with:
 
 ```bash
-python main.py
+python3 main.py
+# or if you have multiple Python versions
+python3.11 main.py
 ```
 
 ## How to Play
@@ -55,4 +68,6 @@ python main.py
 - `ai_player.py` - AI opponent with strategic move evaluation
 
 ## Requirements
-- Python 3.6 or higher
+- Python 3.11.*
+
+**Note:** The code is compatible with Python 3.11 and uses only standard library features.

@@ -149,10 +149,6 @@ def play_game(mode, board_size, ai_difficulty=None):
     
     # Game over - display final results
     game.display_board()
-    
-    play_again = input("\nPlay again? (y/n): ").strip().lower()
-    if play_again == 'y':
-        main()
 
 def main():
     """Main function."""
@@ -165,13 +161,21 @@ def main():
             board_size = select_board_size()
             ai_difficulty = select_difficulty()
             play_game('singleplayer', board_size, ai_difficulty)
-            break
+            
+            play_again = input("\nPlay again? (y/n): ").strip().lower()
+            if play_again != 'y':
+                print("\nThanks for playing!")
+                break
         
         elif choice == '2':
             # Multiplayer mode
             board_size = select_board_size()
             play_game('multiplayer', board_size)
-            break
+            
+            play_again = input("\nPlay again? (y/n): ").strip().lower()
+            if play_again != 'y':
+                print("\nThanks for playing!")
+                break
         
         elif choice == '3':
             print("\nThanks for playing!")

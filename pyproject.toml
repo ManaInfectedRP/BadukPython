@@ -1,0 +1,16 @@
+[project]
+name = "badukpython"
+version = "1.0.0"
+description = "Baduk (Go) board game with singleplayer and multiplayer modes"
+requires-python = ">=3.11,<3.12"
+authors = [
+    {name = "ManaInfectedRP"}
+]
+readme = "README.md"
+license = {text = "MIT"}
+
+[project.scripts]
+baduk = "main:main"
+
+[tool.python]
+version = "3.11"
