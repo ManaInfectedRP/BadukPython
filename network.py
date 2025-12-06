@@ -25,6 +25,9 @@ class GameServer:
         try:
             self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            # Bind to all interfaces (0.0.0.0) to allow connections from other machines
+            # This is necessary for network multiplayer functionality
+            # Users should configure their firewall to control access
             self.server_socket.bind(('0.0.0.0', self.port))
             self.server_socket.listen(1)
             self.running = True
