@@ -2,6 +2,8 @@
 Main entry point for Baduk (Go) game
 """
 
+import sys
+from gui import run_gui
 from game import BadukGame
 
 def display_menu():
@@ -152,6 +154,15 @@ def play_game(mode, board_size, ai_difficulty=None):
 
 def main():
     """Main function."""
+    # Check if terminal mode is requested
+    if len(sys.argv) > 1 and sys.argv[1] == '--terminal':
+        main_terminal()
+    else:
+        # Launch GUI by default
+        run_gui()
+
+def main_terminal():
+    """Terminal-based main function."""
     while True:
         display_menu()
         choice = input("Enter choice (1-3): ").strip()
