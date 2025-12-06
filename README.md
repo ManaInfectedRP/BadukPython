@@ -159,7 +159,7 @@ sudo ufw allow 5555/tcp
 ### Network Configuration
 - **Local Network (LAN):** Players should be on the same local network for best performance
 - **Internet Play:** The host may need to configure port forwarding on their router to play over the internet
-- **IP Address:** The displayed IP address is your local network IP. For internet play, share your public IP address (findable at whatismyip.com)
+- **IP Address:** The displayed IP address is your local network IP. For internet play, share your public IP address (found at whatismyip.com)
 
 ### Troubleshooting
 - **Cannot connect:** Verify the IP address and port are correct
