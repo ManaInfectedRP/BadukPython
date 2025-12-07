@@ -2,13 +2,18 @@
 Baduk (Go) Singleplayer / Multiplayer Game in Python
 
 ## Overview
-A complete implementation of the Baduk (Go) board game with singleplayer (vs AI), local multiplayer, and network multiplayer modes, featuring a graphical user interface for an intuitive playing experience.
+A complete implementation of the Baduk (Go) board game with singleplayer (vs AI), local multiplayer, and network multiplayer modes. Available as both a Python desktop application (Tkinter GUI) and a standalone HTML version that runs directly in your browser.
 
 ## Features
+- **Browser Version (NEW!)**: Play directly in your web browser without any installation
+  - Pure HTML/JavaScript implementation
+  - Works offline - no server required
+  - Singleplayer and local multiplayer support
+  - Beautiful, responsive UI
 - **Graphical User Interface**: Click on the board to place stones instead of typing coordinates
 - **Singleplayer Mode**: Play against an AI opponent with three difficulty levels (Easy, Medium, Hard)
 - **Local Multiplayer Mode**: Play on the same computer against another human player
-- **Network Multiplayer Mode**: Play over the network with another player
+- **Network Multiplayer Mode**: (Desktop version only) Play over the network with another player
   - Host a game and share your IP:Port with another player
   - Join a game by entering the host's IP:Port
   - Real-time move synchronization
@@ -45,14 +50,33 @@ If you don't have Python 3.11, you can install it using:
 
 ## Usage
 
-### GUI Mode (Default)
-Run the game with the graphical interface:
+### Browser Version (Easiest - No Installation Required!)
+Simply open `index.html` in any modern web browser:
+
+1. Navigate to the repository folder
+2. Double-click `index.html` or right-click and select "Open with" your preferred browser
+3. Start playing immediately!
+
+**Features available in browser:**
+- Singleplayer (vs AI) with three difficulty levels
+- Local multiplayer on the same device
+- All board sizes (9x9, 13x13, 19x19)
+- Full game rules implementation
+
+**Note:** The browser version currently supports singleplayer and local multiplayer. For network multiplayer over the internet, use the Python desktop version below.
+
+### Desktop GUI Mode
+Run the game with the Python Tkinter graphical interface:
 
 ```bash
 python3 main.py
 # or if you have multiple Python versions
 python3.11 main.py
 ```
+
+**Additional features in desktop version:**
+- Network multiplayer over the internet
+- IP-based connection for remote play
 
 ### Terminal Mode (Optional)
 If you prefer the original terminal-based interface:
